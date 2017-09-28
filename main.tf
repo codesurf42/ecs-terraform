@@ -1,13 +1,12 @@
 provider "aws" {
-    access_key = "${var.aws_access_key}"
-    secret_key = "${var.aws_secret_key}"
+    profile = "${var.aws_profile}"
     region = "${var.region}"
 }
 
-resource "aws_key_pair" "alex" {
+/*resource "aws_key_pair" "alex" {
     key_name = "alex-key"
     public_key = "${file(var.ssh_pubkey_file)}"
-}
+}*/
 
 resource "aws_vpc" "main" {
     cidr_block = "10.0.0.0/16"
@@ -113,9 +112,10 @@ resource "aws_launch_configuration" "ecs" {
     security_groups = ["${aws_security_group.ecs.id}"]
     iam_instance_profile = "${aws_iam_instance_profile.ecs.name}"
     # TODO: is there a good way to make the key configurable sanely?
-    key_name = "${aws_key_pair.alex.key_name}"
+    // key_name = "${aws_key_pair.alex.key_name}"
+    // key_name = "None"
     associate_public_ip_address = true
-    user_data = "#!/bin/bash\necho ECS_CLUSTER='${var.ecs_cluster_name}' > /etc/ecs/ecs.config"
+    // user_data = "#!/bin/bash\necho ECS_CLUSTER='${var.ecs_cluster_name}' > /etc/ecs/ecs.config"
 }
 
 
@@ -144,5 +144,5 @@ resource "aws_iam_role_policy" "ecs_service_role_policy" {
 resource "aws_iam_instance_profile" "ecs" {
     name = "ecs-instance-profile"
     path = "/"
-    roles = ["${aws_iam_role.ecs_host_role.name}"]
+    role = "${aws_iam_role.ecs_host_role.name}"
 }
