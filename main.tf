@@ -94,6 +94,7 @@ resource "aws_ecs_cluster" "main" {
     name = "${var.ecs_cluster_name}"
 }
 
+
 resource "aws_autoscaling_group" "ecs-cluster" {
     availability_zones = ["${var.availability_zone}"]
     name = "ECS ${var.ecs_cluster_name}"
@@ -104,6 +105,7 @@ resource "aws_autoscaling_group" "ecs-cluster" {
     launch_configuration = "${aws_launch_configuration.ecs.name}"
     vpc_zone_identifier = ["${aws_subnet.main.id}"]
 }
+
 
 resource "aws_launch_configuration" "ecs" {
     name = "ECS ${var.ecs_cluster_name}"

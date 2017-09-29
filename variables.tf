@@ -25,7 +25,7 @@ variable "availability_zone" {
 
 variable "ecs_cluster_name" {
     description = "The name of the Amazon ECS cluster."
-    default = "cluster1"
+    default = "ecsclus1"
 }
 
 variable "amis" {
@@ -49,7 +49,7 @@ variable "autoscale_max" {
 }
 
 variable "autoscale_desired" {
-    default = "2"
+    default = "1"
     description = "Desired autoscale (number of EC2)"
 }
 
