@@ -117,7 +117,7 @@ resource "aws_launch_configuration" "ecs" {
     // key_name = "${aws_key_pair.alex.key_name}"
     // key_name = "None"
     associate_public_ip_address = true
-    // user_data = "#!/bin/bash\necho ECS_CLUSTER='${var.ecs_cluster_name}' > /etc/ecs/ecs.config"
+    user_data = "#!/bin/bash\necho ECS_CLUSTER='${var.ecs_cluster_name}' > /etc/ecs/ecs.config"
 }
 
 
